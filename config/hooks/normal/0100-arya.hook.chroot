@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+rsvg-convert -w 1920 -h 1080 /usr/share/backgrounds/arya/wall1.svg -o /usr/share/backgrounds/arya/wall1.png
+rsvg-convert -w 512 -h 512 /usr/share/pixmaps/arya-logo.svg -o /usr/share/pixmaps/arya-logo.png
+sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="Arya OS 1.0"/; s/^NAME=.*/NAME="Arya OS"/' /etc/os-release
+echo "Arya OS 1.0 \\n \\l" > /etc/issue
+D=/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
+mkdir -p $D
+{
+echo '<?xml version="1.0" encoding="UTF-8"?>'
+echo '<channel name="xfce4-desktop" version="1.0"><property name="backdrop" type="empty"><property name="screen0" type="empty">'
+for m in monitorLVDS1 monitorLVDS-1 monitoreDP-1 monitorVGA1 monitorVirtual1 monitor0 monitor1; do
+  echo "<property name=\"$m\" type=\"empty\"><property name=\"workspace0\" type=\"empty\"><property name=\"color-style\" type=\"int\" value=\"0\"/><property name=\"image-style\" type=\"int\" value=\"5\"/><property name=\"last-image\" type=\"string\" value=\"/usr/share/backgrounds/arya/wall1.png\"/></property></property>"
+done
+echo '</property></property></channel>'
+} > $D/xfce4-desktop.xml
