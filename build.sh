@@ -15,7 +15,7 @@ lb config \
   --iso-application "Arya OS" \
   --iso-publisher "Arya OS" \
   --iso-volume "ARYA_OS" \
-  --bootappend-live "boot=live components quiet splash username=arya hostname=aryaos noautologin locales=en_US.UTF-8 keyboard-layouts=us timezone=Asia/Tehran"
+  --bootappend-live "boot=live components quiet splash username=arya hostname=aryaos locales=en_US.UTF-8 keyboard-layouts=us timezone=Asia/Tehran"
 lb build
 mv -f live-image-amd64.hybrid.iso arya-os.iso
 ls -lh arya-os.iso
