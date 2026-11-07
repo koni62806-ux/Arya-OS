@@ -1,0 +1,26 @@
+name: Build Arya OS ISO
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    container:
+      image: debian:bookworm
+      options: --privileged
+    steps:
+      - name: Install tools
+        run: |
+          apt-get update
+          apt-get install -y git ca-certificates live-build debootstrap squashfs-tools xorriso isolinux syslinux-common syslinux-utils grub-pc-bin grub-efi-amd64-bin grub-common mtools dosfstools rsync
+      - uses: actions/checkout@v4
+      - name: Build ISO
+        run: bash build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AryaOS-ISO
+          path: arya-os.iso
+          compression-level: 0
+          retention-days: 7
